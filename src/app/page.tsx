@@ -525,7 +525,7 @@ export default function Dashboard() {
   const renderOffice = () => (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold">Office</h2>
+        <h2 className="text-2xl font-bold">Digital Office</h2>
         <div className="flex gap-2">
           <button className="px-3 py-1.5 bg-[#161b22] rounded-lg text-sm hover:bg-[#21262d]">All</button>
           <button className="px-3 py-1.5 bg-[#238636] rounded-lg text-sm">Working</button>
@@ -533,42 +533,161 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
-        {officeAgents.map((agent) => (
-          <div key={agent.id} className="bg-[#161b22] rounded-lg p-6 border border-[#30363d]">
-            <div className="flex items-center justify-between mb-4">
-              <div className={`w-16 h-16 ${agent.color} rounded-lg flex items-center justify-center text-2xl`}>
-                {agent.name[0]}
+      {/* Office Floor Plan */}
+      <div className="bg-[#161b22] rounded-xl border border-[#30363d] p-6 mb-6">
+        <div className="grid grid-cols-3 gap-6">
+          {officeAgents.map((agent) => (
+            <div 
+              key={agent.id} 
+              className={`relative rounded-xl p-4 transition-all ${
+                agent.status === 'working' 
+                  ? 'bg-gradient-to-br from-[#1a2e1a] to-[#161b22] border-2 border-[#3fb950]/30' 
+                  : agent.status === 'idle'
+                  ? 'bg-gradient-to-br from-[#2e2a1a] to-[#161b22] border-2 border-[#f0883e]/30'
+                  : 'bg-gradient-to-br from-[#2a1a2e] to-[#161b22] border-2 border-[#8b949e]/30'
+              }`}
+            >
+              {/* Desk Area */}
+              <div className="flex items-center gap-4">
+                {/* Computer Monitor */}
+                <div className="relative">
+                  <div className="w-20 h-14 bg-[#0d1117] rounded-lg border-2 border-[#30363d] flex items-center justify-center overflow-hidden">
+                    {agent.status === 'working' ? (
+                      <div className="w-full h-full bg-[#0d1117] flex items-center justify-center">
+                        <div className="w-12 h-8 bg-[#1f6feb] rounded animate-pulse flex items-center justify-center">
+                          <Monitor size={10} className="text-white" />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-[#30363d]">
+                        <Monitor size={20} />
+                      </div>
+                    )}
+                  </div>
+                  {/* Monitor Stand */}
+                  <div className="w-4 h-3 bg-[#30363d] mx-auto rounded-b" />
+                  {/* Desk */}
+                  <div className={`w-24 h-2 rounded-full mt-1 ${
+                    agent.status === 'working' ? 'bg-[#3fb950]' : agent.status === 'idle' ? 'bg-[#f0883e]' : 'bg-[#8b949e]'
+                  }`} />
+                </div>
+
+                {/* Agent Avatar */}
+                <div className="flex-1">
+                  <div className="flex items-center gap-3">
+                    <div className={`relative w-12 h-12 ${agent.color} rounded-full flex items-center justify-center text-lg font-bold ring-4 ${
+                      agent.status === 'working' 
+                        ? 'ring-[#3fb950]/50 animate-pulse' 
+                        : agent.status === 'idle'
+                        ? 'ring-[#f0883e]/50'
+                        : 'ring-[#8b949e]/50'
+                    }`}>
+                      {agent.name[0]}
+                      {/* Status Indicator */}
+                      <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-[#161b22] ${
+                        agent.status === 'working' ? 'bg-[#3fb950]' : agent.status === 'idle' ? 'bg-[#f0883e]' : 'bg-[#8b949e]'
+                      }`} />
+                    </div>
+                    <div>
+                      <h3 className="font-bold">{agent.name}</h3>
+                      <p className="text-xs text-[#8b949e]">{agent.role}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className={`w-3 h-3 rounded-full ${
-                agent.status === 'working' ? 'bg-[#3fb950] animate-pulse' :
-                agent.status === 'idle' ? 'bg-[#f0883e]' :
-                'bg-[#8b949e]'
-              }`} />
+
+              {/* Task Display */}
+              <div className="mt-4 pt-4 border-t border-[#30363d]/50">
+                <div className="flex items-center gap-2 text-xs text-[#8b949e] mb-1">
+                  {agent.status === 'working' ? <Play size={10} className="text-[#3fb950]" /> : <Circle size={10} />}
+                  {agent.status === 'working' ? 'Working on' : agent.status === 'idle' ? 'Idle - Waiting for' : 'Paused'}
+                </div>
+                <div className={`text-sm truncate ${
+                  agent.status === 'working' ? 'text-[#3fb950]' : 'text-[#8b949e]'
+                }`}>
+                  {agent.currentTask}
+                </div>
+              </div>
+
+              {/* Status Badge */}
+              <div className={`absolute top-3 right-3 px-2 py-1 rounded text-xs font-medium ${
+                agent.status === 'working' ? 'bg-[#3fb950]/20 text-[#3fb950]' : 
+                agent.status === 'idle' ? 'bg-[#f0883e]/20 text-[#f0883e]' : 
+                'bg-[#8b949e]/20 text-[#8b949e]'
+              }`}>
+                {agent.status.toUpperCase()}
+              </div>
             </div>
-            <h3 className="font-bold">{agent.name}</h3>
-            <p className="text-sm text-[#8b949e]">{agent.role}</p>
-            <div className="mt-4 bg-[#0d1117] rounded p-3">
-              <div className="text-xs text-[#8b949e]">Working on</div>
-              <div className="text-sm mt-1">{agent.currentTask}</div>
+          ))}
+        </div>
+      </div>
+
+      {/* Quick Stats */}
+      <div className="grid grid-cols-4 gap-4 mb-6">
+        <div className="bg-[#161b22] rounded-lg p-4 border border-[#30363d]">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-[#3fb950]/20 rounded-lg flex items-center justify-center">
+              <Users size={20} className="text-[#3fb950]" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold">{officeAgents.length}</div>
+              <div className="text-xs text-[#8b949e]">Team Size</div>
             </div>
           </div>
-        ))}
+        </div>
+        <div className="bg-[#161b22] rounded-lg p-4 border border-[#30363d]">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-[#3fb950]/20 rounded-lg flex items-center justify-center">
+              <Play size={20} className="text-[#3fb950]" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-[#3fb950]">{officeAgents.filter(a => a.status === 'working').length}</div>
+              <div className="text-xs text-[#8b949e]">Working</div>
+            </div>
+          </div>
+        </div>
+        <div className="bg-[#161b22] rounded-lg p-4 border border-[#30363d]">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-[#f0883e]/20 rounded-lg flex items-center justify-center">
+              <Clock size={20} className="text-[#f0883e]" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-[#f0883e]">{officeAgents.filter(a => a.status === 'idle').length}</div>
+              <div className="text-xs text-[#8b949e]">Idle</div>
+            </div>
+          </div>
+        </div>
+        <div className="bg-[#161b22] rounded-lg p-4 border border-[#30363d]">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-[#58a6ff]/20 rounded-lg flex items-center justify-center">
+              <Activity size={20} className="text-[#58a6ff]" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-[#58a6ff]">98%</div>
+              <div className="text-xs text-[#8b949e]">Efficiency</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Activity Feed */}
-      <div className="mt-6 pt-6 border-t border-[#30363d]">
+      <div className="bg-[#161b22] rounded-lg border border-[#30363d] p-4">
         <h3 className="text-sm font-medium text-[#8b949e] mb-4">Live Activity</h3>
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div className="flex items-center gap-3 text-sm">
             <Clock size={14} className="text-[#8b949e]" />
-            <span className="text-[#8b949e]">Bot placed trade UP @ OBI:0.81</span>
-            <span className="text-[#484f58]">2m ago</span>
+            <span className="text-[#8b949e]">Trading Bot v9 placed trade UP @ OBI:0.81</span>
+            <span className="text-[#484f58] ml-auto">2m ago</span>
           </div>
           <div className="flex items-center gap-3 text-sm">
             <CheckCircle2 size={14} className="text-[#3fb950]" />
-            <span className="text-[#8b949e]">Task completed: Build Mission Control</span>
-            <span className="text-[#484f58]">1h ago</span>
+            <span className="text-[#8b949e]">Apollo completed: Build Mission Control dashboard</span>
+            <span className="text-[#484f58] ml-auto">15m ago</span>
+          </div>
+          <div className="flex items-center gap-3 text-sm">
+            <Play size={14} className="text-[#58a6ff]" />
+            <span className="text-[#8b949e]">Research Agent started: Signal analysis</span>
+            <span className="text-[#484f58] ml-auto">32m ago</span>
           </div>
         </div>
       </div>
