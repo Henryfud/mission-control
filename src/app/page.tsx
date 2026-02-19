@@ -7,14 +7,14 @@ import {
   LineChart, 
   BarChart3, 
   Settings,
-  ChevronDown,
   RefreshCw,
   Wallet,
   Activity,
   Clock,
-  ArrowUp,
-  ArrowDown,
-  Brain
+  Brain,
+  Bell,
+  Search,
+  User
 } from 'lucide-react'
 
 // Navigation items
@@ -67,9 +67,9 @@ const cryptoAssets = [
 
 // Forecast data
 const forecasts = [
-  { market: 'BTC > $105k by EOW', probability: 68, forecast: 'YES' },
-  { market: 'ETH > $3,500 by EOW', probability: 45, forecast: 'NO' },
-  { market: 'SOL > $200 by EOW', probability: 72, forecast: 'YES' },
+  { market: 'Will BTC close above $105,000 this week?', probability: 68, forecast: 'YES' },
+  { market: 'Will ETH close above $3,500 this week?', probability: 45, forecast: 'YES' },
+  { market: 'Will SOL close above $200 this week?', probability: 72, forecast: 'YES' },
 ]
 
 // Recent trades
@@ -94,13 +94,13 @@ function formatCurrency(value: number): string {
 
 export default function Dashboard() {
   const [activeNav, setActiveNav] = useState('dashboard')
-  const [currentTime, setCurrentTime] = useState('')
+  const [currentDate, setCurrentDate] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     const updateTime = () => {
       const now = new Date()
-      setCurrentTime(now.toLocaleDateString('en-US', { 
+      setCurrentDate(now.toLocaleDateString('en-US', { 
         weekday: 'long', 
         year: 'numeric', 
         month: 'long', 
@@ -108,8 +108,6 @@ export default function Dashboard() {
       }))
     }
     updateTime()
-    const interval = setInterval(updateTime, 60000)
-    return () => clearInterval(interval)
   }, [])
 
   const refreshData = () => {
@@ -141,7 +139,7 @@ export default function Dashboard() {
                   : 'text-[#8b949e] hover:bg-[#21262d] hover:text-white'
               }`}
             >
-              <item.icon size={16} />
+              <item.icon size={18} />
               {item.label}
             </button>
           ))}
@@ -164,26 +162,38 @@ export default function Dashboard() {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
         <header className="h-14 bg-[#010409] border-b border-[#21262d] flex items-center justify-between px-6">
-          <div className="flex items-center gap-4">
+          {/* Left: User Avatars */}
+          <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
-              <Brain size={16} className="text-[#58a6ff]" />
+              <div className="w-8 h-8 bg-[#a371f7] rounded-full flex items-center justify-center">
+                <Brain size={14} className="text-white" />
+              </div>
               <span className="text-sm font-medium">Apollo</span>
             </div>
             <span className="text-[#30363d]">/</span>
             <div className="flex items-center gap-2">
-              <Wallet size={16} className="text-[#f0883e]" />
+              <div className="w-8 h-8 bg-[#f0883e] rounded-full flex items-center justify-center">
+                <User size={14} className="text-white" />
+              </div>
               <span className="text-sm font-medium">Kam</span>
             </div>
           </div>
           
-          <div className="flex items-center gap-3">
+          {/* Right: Icons */}
+          <div className="flex items-center gap-2">
             <button 
               onClick={refreshData}
               className="p-2 text-[#8b949e] hover:text-white hover:bg-[#21262d] rounded-md transition-colors"
             >
-              <RefreshCw size={16} className={isLoading ? 'animate-spin' : ''} />
+              <RefreshCw size={18} className={isLoading ? 'animate-spin' : ''} />
             </button>
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-[#161b22] rounded-md border border-[#30363d]">
+            <button className="p-2 text-[#8b949e] hover:text-white hover:bg-[#21262d] rounded-md transition-colors">
+              <Bell size={18} />
+            </button>
+            <button className="p-2 text-[#8b949e] hover:text-white hover:bg-[#21262d] rounded-md transition-colors">
+              <Search size={18} />
+            </button>
+            <div className="flex items-center gap-2 ml-2 px-3 py-1.5 bg-[#161b22] rounded-md border border-[#30363d]">
               <Activity size={14} className="text-[#3fb950]" />
               <span className="text-sm text-[#3fb950]">Paper Trading</span>
             </div>
@@ -195,7 +205,7 @@ export default function Dashboard() {
           {/* Welcome */}
           <div className="mb-6">
             <h2 className="text-2xl font-semibold">Welcome back</h2>
-            <p className="text-[#8b949e] text-sm mt-1">{currentTime}</p>
+            <p className="text-[#8b949e] text-sm mt-1">{currentDate}</p>
           </div>
 
           {/* Active Positions Section */}
@@ -221,8 +231,7 @@ export default function Dashboard() {
                   <div className={`flex items-center gap-1 text-sm mt-1 ${
                     asset.change >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'
                   }`}>
-                    {asset.change >= 0 ? <ArrowUp size={14} /> : <ArrowDown size={14} />}
-                    {Math.abs(asset.change)}%
+                    {asset.change >= 0 ? '+' : ''}{asset.change}%
                     <span className="text-[#8b949e] ml-1">24h</span>
                   </div>
                 </div>
