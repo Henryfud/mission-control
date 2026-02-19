@@ -18,7 +18,6 @@ import {
   ArrowDown
 } from 'lucide-react'
 
-// Navigation
 const navItems = [
   { id: 'dashboard', label: 'DASHBOARD', icon: LayoutDashboard, active: true },
   { id: 'markets', label: 'MARKETS', icon: TrendingUp },
@@ -67,160 +66,147 @@ export default function Dashboard() {
 
   return (
     <div className="flex h-screen bg-[#0d1117] text-white font-sans">
-      {/* Left Sidebar - Narrow, dark */}
-      <div className="w-48 bg-[#010409] border-r border-[#21262d] flex flex-col">
-        {/* Logo */}
-        <div className="p-4 border-b border-[#21262d]">
-          <h1 className="text-lg font-bold text-[#58a6ff] tracking-wide">MISSION CONTROL</h1>
+      {/* Sidebar */}
+      <div className="w-52 bg-[#010409] border-r border-[#30363d] flex flex-col">
+        <div className="p-4 border-b border-[#30363d]">
+          <h1 className="text-base font-bold text-[#58a6ff] tracking-wider">MISSION CONTROL</h1>
         </div>
 
-        {/* Nav - Icons on left, labels indented */}
-        <nav className="flex-1 p-2 space-y-1">
+        <nav className="flex-1 p-3 space-y-0.5">
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveNav(item.id)}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 activeNav === item.id 
                   ? 'bg-[#1f6feb] text-white' 
                   : 'text-[#8b949e] hover:bg-[#21262d] hover:text-white'
               }`}
             >
-              <item.icon size={18} />
+              <item.icon size={16} />
               {item.label}
             </button>
           ))}
         </nav>
 
-        {/* Bot Status at bottom */}
-        <div className="p-4 border-t border-[#21262d]">
+        <div className="p-3 border-t border-[#30363d]">
           <div className="bg-[#161b22] rounded-lg p-3 border border-[#30363d]">
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-2 mb-1.5">
               <div className="w-2 h-2 bg-[#3fb950] rounded-full animate-pulse" />
               <span className="text-xs text-[#8b949e]">Bot Status</span>
             </div>
-            <div className="text-xl font-bold text-[#3fb950]">5-0</div>
-            <div className="text-xs text-[#8b949e]">Wins / Losses</div>
+            <div className="text-lg font-bold text-[#3fb950]">5-0</div>
+            <div className="text-xs text-[#6e7681]">Wins / Losses</div>
           </div>
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Main */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Header - Logo left, user icons right */}
-        <header className="h-14 bg-[#010409] border-b border-[#21262d] flex items-center justify-between px-6">
-          {/* Left - Nothing extra, logo is in sidebar */}
+        {/* Header */}
+        <header className="h-12 bg-[#010409] border-b border-[#30363d] flex items-center justify-between px-5">
           <div></div>
           
-          {/* Right - User icons + actions */}
-          <div className="flex items-center gap-4">
-            {/* Apollo */}
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 bg-[#a371f7] rounded-full flex items-center justify-center">
-                <Brain size={12} className="text-white" />
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5">
+              <div className="w-6 h-6 bg-[#a371f7] rounded-full flex items-center justify-center">
+                <Brain size={10} className="text-white" />
               </div>
-              <span className="text-sm font-medium">Apollo</span>
+              <span className="text-sm font-medium text-[#e6edf3]">Apollo</span>
             </div>
             
             <span className="text-[#30363d]">/</span>
             
-            {/* Kam */}
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 bg-[#f0883e] rounded-full flex items-center justify-center">
-                <User size={12} className="text-white" />
+            <div className="flex items-center gap-1.5">
+              <div className="w-6 h-6 bg-[#f0883e] rounded-full flex items-center justify-center">
+                <User size={10} className="text-white" />
               </div>
-              <span className="text-sm font-medium">Kam</span>
+              <span className="text-sm font-medium text-[#e6edf3]">Kam</span>
             </div>
 
-            {/* Divider */}
-            <div className="w-px h-6 bg-[#21262d]" />
+            <div className="w-px h-5 bg-[#30363d] mx-1" />
 
-            {/* Icons */}
-            <button className="p-1.5 text-[#8b949e] hover:text-white hover:bg-[#21262d] rounded-md">
-              <RefreshCw size={16} />
+            <button className="p-1.5 text-[#8b949e] hover:text-white hover:bg-[#21262d] rounded">
+              <RefreshCw size={14} />
             </button>
-            <button className="p-1.5 text-[#8b949e] hover:text-white hover:bg-[#21262d] rounded-md">
-              <Bell size={16} />
+            <button className="p-1.5 text-[#8b949e] hover:text-white hover:bg-[#21262d] rounded">
+              <Bell size={14} />
             </button>
-            <button className="p-1.5 text-[#8b949e] hover:text-white hover:bg-[#21262d] rounded-md">
-              <Search size={16} />
+            <button className="p-1.5 text-[#8b949e] hover:text-white hover:bg-[#21262d] rounded">
+              <Search size={14} />
             </button>
 
-            {/* Paper Trading badge */}
-            <div className="flex items-center gap-1.5 px-2 py-1 bg-[#161b22] rounded border border-[#30363d]">
-              <Activity size={12} className="text-[#3fb950]" />
+            <div className="flex items-center gap-1.5 ml-1 px-2 py-1 bg-[#161b22] rounded border border-[#30363d]">
+              <Activity size={10} className="text-[#3fb950]" />
               <span className="text-xs text-[#3fb950]">Paper Trading</span>
             </div>
           </div>
         </header>
 
-        {/* Content Area */}
-        <main className="flex-1 overflow-auto p-6">
-          {/* Welcome */}
-          <div className="mb-6">
-            <h2 className="text-2xl font-semibold">Welcome back</h2>
-            <p className="text-[#8b949e] text-sm mt-1">{currentDate}</p>
+        {/* Content */}
+        <main className="flex-1 overflow-auto p-5">
+          <div className="mb-5">
+            <h2 className="text-xl font-semibold text-[#e6edf3]">Welcome back</h2>
+            <p className="text-sm text-[#8b949e] mt-0.5">{currentDate}</p>
           </div>
 
-          {/* Main Grid - Left: Positions, Right: Forecast + Trades */}
-          <div className="grid grid-cols-3 gap-6">
-            {/* Left Column - 2/3 width */}
+          <div className="grid grid-cols-3 gap-5">
+            {/* Left - Positions */}
             <div className="col-span-2">
-              {/* Active Positions */}
               <section>
-                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                  <TrendingUp size={18} className="text-[#58a6ff]" />
+                <h3 className="text-sm font-semibold text-[#e6edf3] mb-3 flex items-center gap-2">
+                  <TrendingUp size={16} className="text-[#58a6ff]" />
                   Your Active Positions
                 </h3>
                 
                 {/* Crypto Cards */}
-                <div className="grid grid-cols-4 gap-3 mb-4">
+                <div className="grid grid-cols-4 gap-2.5 mb-4">
                   {cryptoAssets.map((asset) => (
                     <div 
                       key={asset.symbol}
                       className="bg-[#161b22] rounded-lg p-3 border border-[#30363d]"
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <span className="font-semibold text-sm">{asset.symbol}</span>
+                        <span className="font-semibold text-sm text-[#e6edf3]">{asset.symbol}</span>
                         <span className="text-[#8b949e] text-xs">{asset.name}</span>
                       </div>
-                      <div className="text-lg font-semibold">${asset.price.toLocaleString()}</div>
+                      <div className="text-base font-semibold text-[#e6edf3]">${asset.price.toLocaleString()}</div>
                       <div className={`flex items-center gap-1 text-xs mt-1 ${
                         asset.change >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'
                       }`}>
-                        {asset.change >= 0 ? <ArrowUp size={12} /> : <ArrowDown size={12} />}
+                        {asset.change >= 0 ? <ArrowUp size={10} /> : <ArrowDown size={10} />}
                         {Math.abs(asset.change)}%
                       </div>
                     </div>
                   ))}
                 </div>
 
-                {/* Positions Table */}
+                {/* Table */}
                 <div className="bg-[#161b22] rounded-lg border border-[#30363d] overflow-hidden">
                   <table className="w-full text-sm">
                     <thead className="bg-[#0d1117]">
                       <tr>
-                        <th className="text-left px-4 py-2.5 text-xs font-medium text-[#8b949e]">Asset</th>
-                        <th className="text-left px-4 py-2.5 text-xs font-medium text-[#8b949e]">Entry Price</th>
-                        <th className="text-left px-4 py-2.5 text-xs font-medium text-[#8b949e]">Side</th>
-                        <th className="text-left px-4 py-2.5 text-xs font-medium text-[#8b949e]">Size</th>
-                        <th className="text-right px-4 py-2.5 text-xs font-medium text-[#8b949e]">P/L</th>
+                        <th className="text-left px-4 py-2 text-xs font-medium text-[#8b949e]">Asset</th>
+                        <th className="text-left px-4 py-2 text-xs font-medium text-[#8b949e]">Entry Price</th>
+                        <th className="text-left px-4 py-2 text-xs font-medium text-[#8b949e]">Side</th>
+                        <th className="text-left px-4 py-2 text-xs font-medium text-[#8b949e]">Size</th>
+                        <th className="text-right px-4 py-2 text-xs font-medium text-[#8b949e]">P/L</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#21262d]">
                       {positions.map((pos, i) => (
                         <tr key={i} className="hover:bg-[#21262d]">
-                          <td className="px-4 py-3 font-medium">{pos.asset}</td>
-                          <td className="px-4 py-3 text-[#8b949e]">${pos.entry.toLocaleString()}</td>
-                          <td className="px-4 py-3">
+                          <td className="px-4 py-2.5 font-medium text-[#e6edf3]">{pos.asset}</td>
+                          <td className="px-4 py-2.5 text-[#8b949e]">${pos.entry.toLocaleString()}</td>
+                          <td className="px-4 py-2.5">
                             <span className={`px-2 py-0.5 rounded text-xs font-medium ${
                               pos.side === 'UP' ? 'bg-[#238636] text-white' : 'bg-[#da3633] text-white'
                             }`}>
                               {pos.side}
                             </span>
                           </td>
-                          <td className="px-4 py-3">${pos.size.toFixed(2)}</td>
-                          <td className={`px-4 py-3 text-right font-medium ${
+                          <td className="px-4 py-2.5 text-[#e6edf3]">${pos.size.toFixed(2)}</td>
+                          <td className={`px-4 py-2.5 text-right font-medium ${
                             pos.pnl >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'
                           }`}>
                             {pos.pnl >= 0 ? '+' : ''}{pos.pnl.toFixed(2)}
@@ -233,12 +219,12 @@ export default function Dashboard() {
               </section>
             </div>
 
-            {/* Right Column - 1/3 width */}
-            <div className="space-y-6">
-              {/* Today's Forecast */}
+            {/* Right */}
+            <div className="space-y-5">
+              {/* Forecast */}
               <section>
-                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                  <Brain size={18} className="text-[#a371f7]" />
+                <h3 className="text-sm font-semibold text-[#e6edf3] mb-3 flex items-center gap-2">
+                  <Brain size={16} className="text-[#a371f7]" />
                   Today's Forecast
                 </h3>
                 <div className="bg-[#161b22] rounded-lg border border-[#30363d] overflow-hidden">
@@ -252,8 +238,8 @@ export default function Dashboard() {
                     <tbody className="divide-y divide-[#21262d]">
                       {forecasts.map((f, i) => (
                         <tr key={i} className="hover:bg-[#21262d]">
-                          <td className="px-3 py-2.5 text-xs">{f.market}</td>
-                          <td className="px-3 py-2.5 text-right text-xs">{f.probability}%</td>
+                          <td className="px-3 py-2 text-xs text-[#e6edf3]">{f.market}</td>
+                          <td className="px-3 py-2 text-right text-xs text-[#e6edf3]">{f.probability}%</td>
                         </tr>
                       ))}
                     </tbody>
@@ -261,14 +247,14 @@ export default function Dashboard() {
                 </div>
               </section>
 
-              {/* Recent Trades */}
+              {/* Trades */}
               <section>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold flex items-center gap-2">
-                    <Clock size={18} className="text-[#f0883e]" />
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-semibold text-[#e6edf3] flex items-center gap-2">
+                    <Clock size={16} className="text-[#f0883e]" />
                     Recent Trades
                   </h3>
-                  <span className={`text-sm font-bold ${
+                  <span className={`text-sm font-semibold ${
                     totalPnL >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'
                   }`}>
                     ${totalPnL >= 0 ? '+' : ''}{totalPnL.toFixed(2)}
@@ -287,16 +273,16 @@ export default function Dashboard() {
                     <tbody className="divide-y divide-[#21262d]">
                       {recentTrades.map((t, i) => (
                         <tr key={i} className="hover:bg-[#21262d]">
-                          <td className="px-3 py-2.5 text-[#8b949e] text-xs">{t.time}</td>
-                          <td className="px-3 py-2.5 text-xs">{t.market}</td>
-                          <td className="px-3 py-2.5">
+                          <td className="px-3 py-2 text-xs text-[#8b949e]">{t.time}</td>
+                          <td className="px-3 py-2 text-xs text-[#e6edf3]">{t.market}</td>
+                          <td className="px-3 py-2">
                             <span className={`px-1.5 py-0.5 rounded text-xs ${
                               t.direction === 'UP' ? 'bg-[#238636] text-white' : 'bg-[#da3633] text-white'
                             }`}>
                               {t.direction}
                             </span>
                           </td>
-                          <td className={`px-3 py-2.5 text-right text-xs font-medium ${
+                          <td className={`px-3 py-2 text-right text-xs font-semibold ${
                             t.pnl >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'
                           }`}>
                             {t.pnl >= 0 ? '+' : ''}{t.pnl.toFixed(2)}
