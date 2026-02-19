@@ -14,16 +14,29 @@ import {
   Brain,
   Bell,
   Search,
-  User
+  User,
+  CheckSquare,
+  FileCheck,
+  Users,
+  Calendar,
+  FolderKanban,
+  FileText,
+  Monitor,
+  Building2
 } from 'lucide-react'
 
 // Navigation items
 const navItems = [
-  { id: 'dashboard', label: 'DASHBOARD', icon: LayoutDashboard, active: true },
-  { id: 'markets', label: 'MARKETS', icon: TrendingUp },
-  { id: 'trading', label: 'TRADING', icon: LineChart },
-  { id: 'analytics', label: 'ANALYTICS', icon: BarChart3 },
-  { id: 'settings', label: 'SETTINGS', icon: Settings },
+  { id: 'tasks', label: 'Tasks', icon: CheckSquare, active: true },
+  { id: 'approvals', label: 'Approvals', icon: FileCheck },
+  { id: 'council', label: 'Council', icon: Users },
+  { id: 'calendar', label: 'Calendar', icon: Calendar },
+  { id: 'projects', label: 'Projects', icon: FolderKanban },
+  { id: 'memory', label: 'Memory', icon: Brain },
+  { id: 'docs', label: 'Docs', icon: FileText },
+  { id: 'people', label: 'People', icon: User },
+  { id: 'office', label: 'Office', icon: Building2 },
+  { id: 'team', label: 'Team', icon: Monitor },
 ]
 
 // Sample crypto data
@@ -128,7 +141,7 @@ export default function Dashboard() {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 p-3 space-y-1">
+        <nav className="flex-1 p-2 space-y-1">
           {navItems.map((item) => (
             <button
               key={item.id}
